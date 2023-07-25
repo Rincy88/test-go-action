@@ -23,6 +23,13 @@ jobs:
         run: |
           export FETCH_LICENSE=true
           npm install -g @cyclonedx/cdxgen@8.6.0 && cdxgen -r -o bom.json
+          
+      - name: Upload a Build Artifact
+        uses: actions/upload-artifact@v3.1.2
+        with:
+          # Artifact name
+          name: Generated sbom
+          path: ./bom.json
       
       - name: Get SBOM using Project UUID
         run: |  
@@ -44,6 +51,13 @@ jobs:
               uuid=""
               touch existing_sbom.json
           fi 
+      
+      - name: Upload a Build Artifact
+        uses: actions/upload-artifact@v3.1.2
+        with:
+          # Artifact name
+          name: Existing sbom
+          path: ./existing_sbom.json
           
       - name: Combine SBOMs
         run: |
